@@ -6,17 +6,7 @@ import type { PrizePoolId } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { History, Monitor, Trash2, Download } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+import { ResetConfirmDialog } from '@/components/ResetConfirmDialog';
 import {
   Dialog,
   DialogContent,
@@ -125,33 +115,15 @@ function IndexPage() {
             </DialogContent>
           </Dialog>
 
-          <AlertDialog open={showResetConfirm} onOpenChange={setShowResetConfirm}>
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive">
-                <Trash2 className="w-4 h-4 mr-2" />
-                重置历史
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent className="bg-slate-900 border-slate-700 text-white">
-              <AlertDialogHeader>
-                <AlertDialogTitle>确认重置？</AlertDialogTitle>
-                <AlertDialogDescription className="text-slate-400">
-                  此操作将清空所有抽奖历史记录，不可恢复。
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className="bg-slate-800 text-white border-slate-600">
-                  取消
-                </AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleReset}
-                  className="bg-red-600 hover:bg-red-700"
-                >
-                  确认重置
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <Button variant="destructive" onClick={() => setShowResetConfirm(true)} className="min-h-[44px]">
+            <Trash2 className="w-4 h-4 mr-2" />
+            重置历史
+          </Button>
+          <ResetConfirmDialog
+            open={showResetConfirm}
+            onOpenChange={setShowResetConfirm}
+            onConfirm={handleReset}
+          />
         </div>
       </div>
     </div>

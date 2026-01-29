@@ -26,11 +26,11 @@ export function executeDraw(ctx: DrawContext): DrawResult {
   let available: Participant[];
 
   if (currentPool === 'lucky') {
+    // 幸运奖：只排除已中过幸运奖的人，允许1-4等奖得主再中
     available = participants.filter((p) => !luckyWinners.has(p.id));
   } else {
-    available = participants.filter(
-      (p) => !regularWinners.has(p.id) && !luckyWinners.has(p.id)
-    );
+    // 1-4等奖：只排除已中过1-4等奖的人（互斥）
+    available = participants.filter((p) => !regularWinners.has(p.id));
   }
 
   const actualCount = Math.min(requestCount, available.length);
